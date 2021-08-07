@@ -1,0 +1,48 @@
+input[type="submit"]{
+    background-color: #008CBA;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+/* test code 
+.with-boxes {
+    background: red;
+}
+*/
+
+.boxed {
+    border: 1px solid #000000;
+    /* test code
+    background: yellow;
+    */
+}
+
+/*below is a media query to have a nice view of the index boxes*/
+@media (max-width:992px) and (min-width:768px) {
+    .middle-box {
+        /*below is a value to be able to have a nice view of the index boxes*/
+        height: 189px;
+    }
+}
+
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+footer{
+    background-color: lightgray;
+    margin-top: auto;
+}
+
+.email {
+    color: red;
+}
