@@ -16,16 +16,16 @@ body {font-family: Verdana, sans-serif;}
 .month {
   padding: 70px 25px;
   width: 100%;
-  background: #1abc9c;
+  background: #008CBA;
   text-align: center;
 }
 
-.month ul {
+.month .calendar-ul {
   margin: 0;
   padding: 0;
 }
 
-.month ul li {
+.month .calendar-ul li {
   color: white;
   font-size: 20px;
   text-transform: uppercase;
@@ -73,7 +73,7 @@ body {font-family: Verdana, sans-serif;}
 
 .days li .active {
   padding: 5px;
-  background: #1abc9c;
+  background: #008CBA;
   color: white !important
 }
 
