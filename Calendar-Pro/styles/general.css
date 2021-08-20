@@ -1,4 +1,4 @@
-input[type="submit"]{
+input[type="submit"] {
     background-color: #008CBA;
     border: none;
     color: white;
@@ -25,6 +25,16 @@ input[type="submit"]{
     /* test code
     background: yellow;
     */
+}
+
+.form-boxed {
+    border: 1px solid #000000;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    /* background: rgb(200, 230, 240);*/
+    /* background: lightgray; */
+    background: rgb(200, 230, 240);
 }
 
 /*below is a media query to have a nice view of the index boxes*/

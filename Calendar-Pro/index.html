@@ -29,33 +29,35 @@
 <div class="container">
   <div class="row with-boxes">
     <div class="col-sm-4 boxed">
-      <h3>Add an event</h3>
+      <h3><b>Add an event</b></h3>
       <p>Choose to add a yearly, monthly or any other kind of event you like in your calendar!</p>
       <br>
       <br>
       <br>
-      <form action="#">
+      <form action="./CRUD/add_event.html">
         <input type="submit" value="Add event...">
       </form>
     </div>
     <div class="col-sm-4 boxed middle-box">
-      <h3>Remove an event</h3>
+      <h3><b>Remove an event</b></h3>
       <p>You want to delete an event from your Calendar? No problem!</p>
       <br>
       <br>
       <br>
-      <form action="#">
+      <form action="./CRUD/choice/choose_event.html">
         <input type="submit" value="Remove event...">
+        <input type="hidden" name="crud" value="remove">
       </form>
     </div>
     <div class="col-sm-4 boxed">
-      <h3>Update an event</h3>        
+      <h3><b>Update an event</b></h3>        
       <p>Made a mistake? Something changed in your schedules? Make your changes right away!</p>
       <br>
       <br>
       <br>
-      <form action="#">
+      <form action="./CRUD/choice/choose_event.html">
         <input type="submit" value="Update event...">
+        <input type="hidden" name="crud" value="update">
       </form>
     </div>
   </div>
@@ -66,7 +68,7 @@
 
 <!-- Calendar jumbotron-->
 <div class="jumbotron text-center">
-    <h2>View your Calendar below!</h1>
+    <h2>View your Calendar below!</h2>
 </div>
 
 <!-- Calendar -->
@@ -92,38 +94,7 @@
     <li>Su</li>
   </ul>
   
-  <ul class="days calendar-ul">  
-    <li>1</li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
-    <li>5</li>
-    <li>6</li>
-    <li>7</li>
-    <li>8</li>
-    <li>9</li>
-    <li><span class="active">10</span></li>
-    <li>11</li>
-    <li>12</li>
-    <li>13</li>
-    <li>14</li>
-    <li>15</li>
-    <li>16</li>
-    <li>17</li>
-    <li>18</li>
-    <li>19</li>
-    <li>20</li>
-    <li>21</li>
-    <li>22</li>
-    <li>23</li>
-    <li>24</li>
-    <li>25</li>
-    <li>26</li>
-    <li>27</li>
-    <li>28</li>
-    <li>29</li>
-    <li>30</li>
-    <li>31</li>
+  <ul id="calendar-days" class="days calendar-ul">
   </ul>
 </div>
 
@@ -146,6 +117,8 @@
     <br>
   </div>
 </footer>
+
+<script src="./JavaScript/calendar.js"></script>
 
 </body>
 </html>

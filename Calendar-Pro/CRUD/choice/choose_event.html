@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Calendar Pro</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <!-- General stylesheet -->
+  <link rel="stylesheet" type="text/css" href="../../styles/general.css">
+
+  <!-- Calendar stylesheet -->
+  <link rel="stylesheet" type="text/css" href="../../styles/calendar.css">
+</head>
+<body>
+
+    <!-- Jumbotron text -->
+    <div class="jumbotron text-center">
+        <h1> <span id="title"></span> an event</h1>
+        <a href="../../index.html">or go back</a>
+    </div>
+
+    <div class="container">
+        <p class="lead">
+            Choose below the event that you want to <span id="paragraph"></span>.
+        </p>
+    </div>
+
+    <!-- Calendar -->
+    <div class="container calendar-body">
+        <div class="month">      
+        <ul class="calendar-ul">
+            <li class="prev">&#10094;</li>
+            <li class="next">&#10095;</li>
+            <li>
+            August<br>
+            <span style="font-size:18px">2021</span>
+            </li>
+        </ul>
+        </div>
+        
+        <ul class="weekdays calendar-ul">
+        <li>Mo</li>
+        <li>Tu</li>
+        <li>We</li>
+        <li>Th</li>
+        <li>Fr</li>
+        <li>Sa</li>
+        <li>Su</li>
+        </ul>
+        
+        <ul id="calendar-days" class="days calendar-ul"> 
+        </ul>
+    </div>
+
+    <br>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+            Email: <a href = "mailto: p.karamolegos@yahoo.gr" class="email">p.karamolegos@yahoo.gr</a>
+            </div>
+            <div class="col-sm-4">
+            A project made by: Karamolegkos Panagiotis
+            </div>
+            <div class="col-sm-4">
+            Calendar Pro © 2021
+            </div>
+        </div>
+        <br>
+        </div>
+    </footer>
+
+    <!-- Script to differentiate the remove and update functions -->
+    <script>
+        // Get the GET queryString
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const crud = urlParams.get('crud');
+
+        // If there are no parameters go back to index
+        if(crud === null){
+            window.location.href = '../../index.html';
+        }
+
+        // get the needed elements
+        let title = document.getElementById("title");
+        let paragraph = document.getElementById("paragraph");
+
+        // if it is a remove call then
+        if(crud === "remove"){
+            title.innerHTML = "Remove";
+            paragraph.innerHTML = "remove";
+        }
+
+        // if it is an update call then
+        if(crud === "update"){
+            title.innerHTML = "Update";
+            paragraph.innerHTML = "update";
+        }
+    </script>
+
+    <script src="../../JavaScript/calendar.js"></script>
+</body>
+</html>

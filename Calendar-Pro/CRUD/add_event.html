@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Calendar Pro - Add an event</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <!-- General stylesheet -->
+  <link rel="stylesheet" type="text/css" href="../styles/general.css">
+
+  <!-- Calendar stylesheet -->
+  <link rel="stylesheet" type="text/css" href="../styles/calendar.css">
+</head>
+<body>
+
+<!-- Jumbotron text -->
+<div class="jumbotron text-center">
+    <h1>Add an event</h1>
+    <a href="../index.html">or go back</a>
+</div>
+  
+<!-- Event Form -->
+<div class="container">
+    <form action="../index.html">
+        <div class="form-boxed">
+            <div class="form-group">
+                <label for="eventNameInput">Event Name:</label>
+                <input type="text" class="form-control" id="eventNameInput" aria-describedby="eventNameHelp" placeholder="Enter event Name" required>
+                <small id="eventNameHelp" class="form-text text-muted">Give the name of your new event.</small>
+            </div>
+        </div>
+
+        <div class="form-boxed">
+            <div class="form-group">
+                <label for="eventDateInput">Event Date:</label>
+                <input type="date" class="form-control" id="eventDateInput" aria-describedby="eventDateHelp" required>
+                <small id="eventDateHelp" class="form-text text-muted">Give the date of your event.</small>
+            </div>
+        </div>
+
+        <div class="form-boxed">
+            <label>Is this an "All day" event?</label>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1" onclick="toggleAllDay()" aria-describedby="eventAllDayHelp" checked>
+                <label class="form-check-label" for="exampleCheck1">All day</label>
+                <br>
+                <small id="eventAllDayHelp" class="form-text text-muted">Remove the checkbox if you want to give a specific time to your event.</small>
+            </div>
+
+            <div id="allDayToglable" style="display: none;">
+                <div class="form-group">
+                    <label for="eventTimeInput">Event Time:</label>
+                    <input type="time" class="form-control" id="eventTimeInput" aria-describedby="eventTimeHelp">
+                    <small id="eventTimeHelp" class="form-text text-muted">Give the starting time of your event.</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-boxed">
+            <label>Is your event repeatable?</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="RepeatableOptions" id="OneTimeRadio" value="option1" onclick="toggleRepeatable()" checked>
+                <label class="form-check-label" for="OneTimeRadio">One time event</label>
+            </div>
+            <small id="eventRadioHelp" class="form-text text-muted">Choose if your event is repeatable.</small>
+
+            <div id="repeatableToglable" style="display: none;">
+                <br>
+                <label>Your event is repeatable every...</label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="RearityOptions" id="XdaysRadio" value="option1" checked>
+                    <label class="form-check-label" for="XdaysRadio">
+                        <input type="number" id="days" name="days" min="1" value="2">  days
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="RearityOptions" id="WeekRadio" value="option2">
+                    <label class="form-check-label" for="WeekRadio">Week</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="RearityOptions" id="MonthRadio" value="option3">
+                    <label class="form-check-label" for="MonthRadio">Month</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="RearityOptions" id="YearRadio" value="option4">
+                    <label class="form-check-label" for="YearRadio">Year</label>
+                </div>
+                <small id="eventRadioHelp" class="form-text text-muted">Choose how often your event is repeatable.</small>
+            </div>
+        </div>
+
+        <div class="form-boxed">
+          <label>Annotation:</label>
+          <input type="text" class="form-control" id="eventAnnotationInput" aria-describedby="eventAnnotationHelp" placeholder="Useful annotation">
+          <small id="eventAnnotationHelp" class="form-text text-muted">Add an annotation for you event.<br>(This is optional)</small>
+        </div>
+
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<br>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4">
+        Email: <a href = "mailto: p.karamolegos@yahoo.gr" class="email">p.karamolegos@yahoo.gr</a>
+      </div>
+      <div class="col-sm-4">
+        A project made by: Karamolegkos Panagiotis
+      </div>
+      <div class="col-sm-4">
+        Calendar Pro © 2021
+      </div>
+    </div>
+    <br>
+  </div>
+</footer>
+
+<script>
+    function toggleAllDay() {
+      let x = document.getElementById("allDayToglable");
+      let y = document.getElementById("eventTimeInput");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+        y.required = true;
+      } else {
+        x.style.display = "none";
+        y.required = false;
+      }
+    }
+</script>
+
+<script>
+    function toggleRepeatable() {
+      let x = document.getElementById("repeatableToglable");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      } else {
+        x.style.display = "none";
+      }
+    }
+</script>
+
+</body>
+</html>

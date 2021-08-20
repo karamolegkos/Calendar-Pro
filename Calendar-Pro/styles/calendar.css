@@ -1,3 +1,5 @@
+/* General calendar css*/
+
 /*
 * {box-sizing: border-box;}
 ul {list-style-type: none;}
@@ -35,11 +37,17 @@ body {font-family: Verdana, sans-serif;}
 .month .prev {
   float: left;
   padding-top: 10px;
+  cursor: pointer;
 }
 
 .month .next {
   float: right;
   padding-top: 10px;
+  cursor: pointer;
+}
+
+.month .prev:hover,  .month .next:hover{
+  color: lightgray;
 }
 
 .weekdays {
@@ -69,24 +77,46 @@ body {font-family: Verdana, sans-serif;}
   margin-bottom: 5px;
   font-size:12px;
   color: #777;
+  border-style: solid;
+  cursor: pointer;
+  padding: 5px;
+  font-weight: bold;
 }
 
-.days li .active {
+.days li:hover{
+  background-color: lightgray;
+}
+
+.days li.noday, .days li.noday:hover {
+  color: white !important;
+  background-color: rgb(99, 99, 99);
+  cursor: default;
+}
+
+.active {
+  border-color: black;
   padding: 5px;
   background: #008CBA;
   color: white !important
 }
 
+.days li.active:hover{
+  background-color: #00aae2;
+}
+
 /* Add media queries for smaller screens */
-@media screen and (max-width:720px) {
+@media screen and (max-width:992px) {
   .weekdays li, .days li {width: 13.1%;}
 }
 
-@media screen and (max-width: 420px) {
-  .weekdays li, .days li {width: 12.5%;}
-  .days li .active {padding: 2px;}
+@media screen and (max-width: 553px) {
+  .weekdays li, .days li {width: 12.8%;}
 }
 
-@media screen and (max-width: 290px) {
+@media screen and (max-width: 451px) {
   .weekdays li, .days li {width: 12.2%;}
+}
+
+@media screen and (max-width: 333px) {
+  .weekdays li, .days li {width: 11%;}
 }
