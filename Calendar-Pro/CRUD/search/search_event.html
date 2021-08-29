@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Calendar Pro - Search Event</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <!-- General stylesheet -->
+  <link rel="stylesheet" type="text/css" href="../../styles/general.css">
+
+  <!-- SearchBar stylesheet -->
+  <link rel="stylesheet" type="text/css" href="../../styles/searchbar.css">
+
+  <!-- Search Bar icon library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+    <!-- Jumbotron text -->
+    <div class="jumbotron text-center">
+        <h1> Search an event to <span id="title"> it</span></h1>
+        <a href="../../index.html">or go back</a>
+    </div>
+
+    <!-- Search bar -->
+    <div class="container">
+        <p class="lead">
+            Search below the event that you want to <span id="paragraph"></span>.
+        </p>
+
+        <form class="search">
+            Search by event name:<br>
+            <input type="text" placeholder="Name.." name="searchByName">
+            <input type="hidden" name="crud" value="" id="searchCrud">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+    </div>
+
+    <!-- Search Results -->
+    <div class="container results" id="results" style="display: none;">
+        <br>
+        <div id="resultsFound" style="display: none;">
+            <p class="lead">
+                Events found:
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action">Παναγιώτης Γενέθλια</a>
+                    <a href="#" class="list-group-item list-group-item-action">General Meeting</a>
+                    <a href="#" class="list-group-item list-group-item-action">Μάθημα Ανάλυση 1</a>
+                </div>
+            </p>
+        </div>
+
+        <div class="alert alert-danger" role="alert" id="resultsNotFound" style="display: none;">
+            No events found!
+        </div>
+
+    </div>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+            Email: <a href = "mailto: p.karamolegos@yahoo.gr" class="email">p.karamolegos@yahoo.gr</a>
+            </div>
+            <div class="col-sm-4">
+            A project made by: Karamolegkos Panagiotis
+            </div>
+            <div class="col-sm-4">
+            Calendar Pro © 2021
+            </div>
+        </div>
+        <br>
+        </div>
+    </footer>
+
+    <!-- Test script for front end purposes -->
+    <script>
+        // A function to show dummy results, or not, randomly 
+        function showResults() {
+            // Get a random number from 1 to 10
+            let rand = Math.floor(Math.random() * 10) + 1
+
+            // Get the test IDs
+            let resultsFound = document.getElementById("resultsFound");
+            let resultsNotFound = document.getElementById("resultsNotFound");
+
+            if(rand <= 5){
+                resultsFound.style.display = "block";
+            }
+            else{
+                resultsNotFound.style.display = "block";
+            }
+        }
+    </script>
+
+    <!-- Script to differentiate the remove and update functions -->
+    <script>
+        // Get the GET queryString
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const crud = urlParams.get('crud');
+
+        // If there are no parameters go back to index
+        if(crud === null){
+            window.location.href = '../../index.html';
+        }
+        else{
+            // get the needed elements
+            let title = document.getElementById("title");
+            let paragraph = document.getElementById("paragraph");
+            let hidden = document.getElementById("searchCrud");
+
+            // crud will be remove or update
+            title.innerHTML = crud;
+            paragraph.innerHTML = crud;
+            hidden.value = crud;
+        }
+    </script>
+
+    <!-- Script to show the results after a search -->
+    <script>
+        // Get the search by name parameter
+        const nameSearch = urlParams.get('searchByName');
+
+        // if there has been a search then show results
+        if(nameSearch != null){
+            let results = document.getElementById("results");
+            results.style.display = "block";
+
+            // test function for random dummy results
+            showResults();
+
+            // make all events have the right link
+            let events = document.querySelectorAll(".list-group-item");
+            events.forEach((item, index)=>{
+                // This id will be given by the database
+                item.href = "../"+crud+"_event.html?event_id="+index;
+            })
+
+            // Make active the events that are hovered
+            $(document).ready(function () {
+                $(".list-group-item").hover(
+                function () {
+                    $(this).addClass("active");
+                },
+                function () {
+                    $(this).removeClass("active");
+                }
+                );
+            });
+        }
+    </script>
+</body>
+</html>

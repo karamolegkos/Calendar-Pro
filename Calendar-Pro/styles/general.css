@@ -45,6 +45,18 @@ input[type="submit"] {
     }
 }
 
+@media only screen and (max-width: 768px){
+    .results {
+        width: 540px;
+    }
+}
+
+@media only screen and (max-width: 576px){
+    .results {
+        width: 100%;
+    }
+}
+
 body{
     min-height: 100vh;
     display: flex;

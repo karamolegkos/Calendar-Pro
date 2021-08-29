@@ -105,5 +105,3 @@ while(true){
 
     parseDate = nextDate;
 }
-
-console.log(calendarDays);
