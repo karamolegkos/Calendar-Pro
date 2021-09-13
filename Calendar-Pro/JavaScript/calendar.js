@@ -67,7 +67,7 @@ const dayNames = [
 
 const monthNames = [
     "January",      // 0
-    "Febuary",      // 1
+    "February",     // 1
     "March",        // 2
     "April",        // 3
     "May",          // 4
@@ -77,7 +77,7 @@ const monthNames = [
     "September",    // 8
     "October",      // 9
     "November",     // 10
-    "December",     // 1
+    "December",     // 11
 ];
 
 let todayDate = new Date();
@@ -89,8 +89,57 @@ var monthDifference = 0;
 
 ////////// Main Functions //////////
 
+/* Uses an API to get the days with events of a given month */
+let paintMonthsEventDays = function(givenDate){
+    // This will be the answer from the API for the given month
+    let k = 0;
+    let days = [3, 14, 17];
+
+    if(days.length == 0) return;
+
+    // days ul
+    let calendarDays = document.querySelectorAll("#calendar-days li");
+    calendarDays.forEach(childDay => {
+        if(days[k] == childDay.innerHTML){
+
+            if(childDay.classList.contains("active")){
+                childDay.classList.remove('active');
+                childDay.classList.add('active-event-day');
+            }
+            else{
+                childDay.classList.add('event-day');
+            }
+
+            k++;
+        }
+    });
+
+}
+
+let giveListenersToMonthsDays = function(givenDate){
+    // days ul
+    let calendarDays = document.querySelectorAll("#calendar-days li");
+
+    // give listeners to real days only
+    calendarDays.forEach(eventDay => {
+        if(!eventDay.classList.contains("noday")){
+            eventDay.addEventListener("click", function() {
+                let thisYear = givenDate.getFullYear();
+                let thisMonth = givenDate.getMonth();
+                let thisDay = eventDay.innerHTML;
+                
+                window.location = "./CRUD/view_event.html?year=" + thisYear + "&" 
+                                    + "month=" +thisMonth + "&"
+                                    + "day=" +thisDay;
+            });
+        }
+    });
+
+}
+
 /* Starts from a date as the first of the month and makes a Callendar for the given month */
 let buildCalendar = function(startingDate){
+    let holdingDate = startingDate;
     // make sundays the number 7
     let dayNum = startingDate.getDay();
     if(dayNum == 0){
@@ -165,6 +214,15 @@ let buildCalendar = function(startingDate){
 
         startingDate = nextDate;
     }
+
+    // Get the events for the given month by the APIs and then paint as green the needed days
+    // if there is an event today then make it a dark green colour
+
+    // Make the right CSS for the event days
+    paintMonthsEventDays(holdingDate);
+
+    // Give onclick event listeners for the event days.
+    giveListenersToMonthsDays(holdingDate);
 }
 
 /* Gives to the buildCalendar() the first day of the current month */
