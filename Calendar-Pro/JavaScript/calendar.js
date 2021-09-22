@@ -128,7 +128,7 @@ let giveListenersToMonthsDays = function(givenDate){
                 let thisMonth = givenDate.getMonth();
                 let thisDay = eventDay.innerHTML;
                 
-                window.location = "./CRUD/view_event.html?year=" + thisYear + "&" 
+                window.location = "./CRUD/view_events.html?year=" + thisYear + "&" 
                                     + "month=" +thisMonth + "&"
                                     + "day=" +thisDay;
             });

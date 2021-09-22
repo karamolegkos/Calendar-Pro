@@ -13,32 +13,95 @@
 
   <!-- General stylesheet -->
   <link rel="stylesheet" type="text/css" href="../styles/general.css">
+
+  <!-- Clock stylesheet -->
+  <link rel="stylesheet" type="text/css" href="../Clock/clock.css">
+
+  <!-- Date Display stylesheet -->
+  <link rel="stylesheet" type="text/css" href="../DateDisplay/date_display.css">
 </head>
 <body>
 
     <!-- Jumbotron text -->
     <div class="jumbotron text-center">
-        <h1><span id="jumbotron-title"></span></h1>
-        <a href="../index.html">Go back</a>
+        <h1>View your Event</h1>
+        <a href="../index.html">or go back</a>
     </div>
 
     <!-- Events View -->
     <div class="container">
-        <p class="lead">
-            View below your events for this day!
+        <!-- Event Name -->
+        <p class="lead event-info">
+            Event name: "<b><span id="event_name"></span></b>"
         </p>
-        <div id="resultsFound" style="display: none;">
-            <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action">Παναγιώτης Γενέθλια</a>
-                <a href="#" class="list-group-item list-group-item-action">General Meeting</a>
-                <a href="#" class="list-group-item list-group-item-action">Μάθημα Ανάλυση 1</a>
+        <!-- Most Event's information -->
+        <div class="row">
+            <!-- Event's Date -->
+            <div class="col-sm-6 event-info">
+                <u>Date: <b><span id="event_date"></span></b></u>
+                <br>
+                <div class="date-diplay">
+                    <time class="icon">
+                        <em id="date-day">Saturday</em>
+                        <strong id="date-month">September</strong>
+                        <span id="date-day-num">20</span>
+                    </time>
+                </div>
+                <!-- Event's Repeatability -->
+                <p><em><span id="repeatability"></span></em></p>
+                <!-- Event's Annotation -->
+                <div id="annotation" style="display: none;">
+                    <div class="alert alert-success" role="alert">
+                        <h4 class="alert-heading">Annotation</h4>
+                        <hr>
+                        <p class="mb-0"><strong><span id="annotation-note"></span></strong></p>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="alert alert-danger" role="alert" id="resultsNotFound" style="display: none;">
-            No events found!
+            <!-- Event's Time-->
+            <div class="col-sm-6 event-info">
+                <!-- If it is an all day event -->
+                <div style="display: none;" id="it-is-all-time">
+                    <div class="alert alert-secondary" role="alert">
+                        <div class="alert alert-warning" role="alert">
+                            This is an all day event!
+                        </div>
+                    </div>
+                </div>
+                <!-- If it is not an all day event -->
+                <div style="display: none;" id="it-is-not-all-time">
+                    <u>At time: <b><span id="event_time"></span></b></u>
+                    <div class="clock">
+                        <div class="outer-clock-face">
+                            <div class="marking marking-one"></div>
+                            <div class="marking marking-two"></div>
+                            <div class="marking marking-three"></div>
+                            <div class="marking marking-four"></div>
+                            <div class="inner-clock-face">
+                            <div class="hand hour-hand"></div>
+                            <div class="hand min-hand"></div>
+                            <!-- my values -->
+                            <span id="hoursGot" style="display: none;"></span>
+                            <span id="minutesGot" style="display: none;"></span>
+                            <!-- my values -->
+                            <!-- <div class="hand second-hand"></div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
+    <br>
+
+    <!-- Buttons to Remove or update an event -->
+    <div class="container">
+        <button type="button" class="btn btn-primary" id="update-button">Update event</button>
+        <button type="button" class="btn btn-primary" id="remove-button">Remove event</button>
+    </div>
+
+    <br>
 
     <!-- Footer -->
     <footer>
@@ -58,61 +121,155 @@
         </div>
     </footer>
 
-
-    <!-- Test script for front end purposes -->
+    <!-- if the is no event id given then go back to the main page -->
     <script>
-        // A function to show dummy results, or not, randomly 
-        function showResults() {
-            // Get a random number from 1 to 10
-            let rand = Math.floor(Math.random() * 10) + 1
-
-            // Get the test IDs
-            let resultsFound = document.getElementById("resultsFound");
-            let resultsNotFound = document.getElementById("resultsNotFound");
-
-            if(rand <= 5){
-                resultsFound.style.display = "block";
-            }
-            else{
-                resultsNotFound.style.display = "block";
-            }
-        }
-        showResults();
-    </script>
-
-    <!-- A script to make a friendly message for the date that the user is viewing -->
-    <script>
-        const monthNames = [
-            "January",      // 0
-            "February",     // 1
-            "March",        // 2
-            "April",        // 3
-            "May",          // 4
-            "June",         // 5
-            "July",         // 6
-            "August",       // 7
-            "September",    // 8
-            "October",      // 9
-            "November",     // 10
-            "December",     // 11
-        ];
-
-        let dayLetters = [];
-        dayLetters.push("st");
-        dayLetters.push("nd");
-        dayLetters.push("rd");
-        for(let i=0; i<= 27; i++){
-            dayLetters.push("th");
-        }
-
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
-        const thisYear = urlParams.get('year');
-        const thisMonth = urlParams.get('month');
-        const thisDay = urlParams.get('day');
+        const eventGiven = urlParams.get('event_id');
 
-        document.getElementById("jumbotron-title").innerHTML = thisDay+dayLetters[thisDay-1]+" of "+monthNames[thisMonth]+", "+thisYear;
-
+        if(!eventGiven){
+            window.location.replace("../index.html");
+        }
     </script>
+
+    <!-- Script to handle the events (Using dummy events for now) -->
+    <script>
+        if(eventGiven){
+            // below is a dummy json event
+
+            /*
+            let event = {
+                "event-id": "0",
+                "event-name": "Happy Birthday",
+                "event-date": "30/07/2022",
+                "all-day": true,
+                "event-time":"-",
+                "one-time-event":false,
+                "repeatable-method":"year",
+                "repeatable-every":1,
+                "annotation":"Happy Birthday to me :)"
+            };
+            */
+
+            
+            let event = {
+                "event-id": "1",
+                "event-name": "General Meeting",
+                "event-date": "09/07/2022",
+                "all-day": false,
+                "event-time":"17:10",
+                "one-time-event":false,
+                "repeatable-method":"week",
+                "repeatable-every":2,
+                "annotation":false
+            };
+            
+
+            /*
+            let event = {
+                "event-id": "2",
+                "event-name": "Thesis",
+                "event-date": "30/12/2021",
+                "all-day": true,
+                "event-time":"-",
+                "one-time-event":true,
+                "repeatable-method":"-",
+                "repeatable-every":0,
+                "annotation":"FINALLY"
+            };
+            */
+
+            /*
+            let event = {
+                "event-id": "3",
+                "event-name": "Calculus Lesson",
+                "event-date": "11/10/2021",
+                "all-day": false,
+                "event-time":"08:15",
+                "one-time-event":false,
+                "repeatable-method":"week",
+                "repeatable-every":1,
+                "annotation":"OH NO THIS IS BAD!!"
+            };
+            */
+
+            let event_name = document.getElementById("event_name");
+            let event_date = document.getElementById("event_date");
+            let all_day = document.getElementById("all_day");
+            let event_time = document.getElementById("event_time");
+            let one_time_event = document.getElementById("one_time_event");
+            let repeatable_method = document.getElementById("repeatable_method");
+            let repeatable_every = document.getElementById("repeatable_every");
+            let annotation = document.getElementById("annotation");
+
+            // The name of the event
+            event_name.innerHTML = event["event-name"];
+
+            // The time of the event or all day event
+
+            if(event["all-day"] == true){
+                document.getElementById("it-is-all-time").style.display = "block";
+            }
+            else if(event["all-day"] == false){
+                document.getElementById("it-is-not-all-time").style.display = "block";
+                event_time.innerHTML = event["event-time"];
+                document.getElementById("hoursGot").innerHTML = event["event-time"][0]+event["event-time"][1];
+                document.getElementById("minutesGot").innerHTML = event["event-time"][3]+event["event-time"][4];
+            }
+
+            // The date of the event
+            event_date.innerHTML = event["event-date"];
+            let tempDate = new Date(event["event-date"].substring(6, 10), 
+                                    parseInt(event["event-date"].substring(3, 5))-1,    // the month is 0-indexed
+                                    event["event-date"].substring(0, 2)); 
+            let date_month = tempDate.toLocaleString('en-us', { month: 'long' }); // The given month's name
+            let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            let date_day_name = days[tempDate.getDay()]; // The given day's name
+            let date_day = tempDate.getDate(); // The given day's number
+            document.getElementById("date-day").innerHTML = date_day_name;
+            document.getElementById("date-month").innerHTML = date_month;
+            document.getElementById("date-day-num").innerHTML = date_day;
+
+            // The repeatability of the event
+            if(event["one-time-event"] == true){
+                document.getElementById("repeatability").innerHTML = "This event will not be repeated again.";
+            }
+            else if(event["one-time-event"] == false){
+                document.getElementById("repeatability").innerHTML = "This event is taking place every "
+                                                                        + event["repeatable-every"]+" "
+                                                                        + event["repeatable-method"];
+                if(event["repeatable-every"] > 1){
+                    document.getElementById("repeatability").innerHTML = 
+                            document.getElementById("repeatability").innerHTML + "s";
+                }
+                document.getElementById("repeatability").innerHTML = 
+                            document.getElementById("repeatability").innerHTML + ".";
+            }
+
+            // The annotation of the event
+            if(event["annotation"] !== false){
+                document.getElementById("annotation").style.display = "block";
+                document.getElementById("annotation-note").innerHTML = event["annotation"];
+            }
+
+
+            // Update the "update event" and "remove event" buttons
+            let updateButton = document.getElementById("update-button");
+            let deleteButton = document.getElementById("remove-button");
+            console.log(event["event-id"]);
+
+            updateButton.addEventListener("click", function() {
+                window.location.href = "./update_event.html?event_id="+event["event-id"];
+            });
+
+            deleteButton.addEventListener("click", function() {
+                window.location.href = "./remove_event.html?event_id="+event["event-id"];
+            });
+
+        }
+    </script>
+
+    <!-- Clock Script -->
+    <script src="../Clock/clock.js"></script>
 </body>
 </html>

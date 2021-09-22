@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Calendar Pro - View Events</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <!-- General stylesheet -->
+  <link rel="stylesheet" type="text/css" href="../styles/general.css">
+</head>
+<body>
+
+    <!-- Jumbotron text -->
+    <div class="jumbotron text-center">
+        <h1><span id="jumbotron-title"></span></h1>
+        <a href="../index.html">Go back</a>
+    </div>
+
+    <!-- Events View -->
+    <div class="container">
+        <p class="lead">
+            View below your events for this day!
+        </p>
+        <div id="resultsFound" style="display: none;">
+            <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action">Παναγιώτης Γενέθλια</a>
+                <a href="#" class="list-group-item list-group-item-action">General Meeting</a>
+                <a href="#" class="list-group-item list-group-item-action">Μάθημα Ανάλυση 1</a>
+            </div>
+        </div>
+        <div class="alert alert-danger" role="alert" id="resultsNotFound" style="display: none;">
+            No events found!
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+            Email: <a href = "mailto: p.karamolegos@yahoo.gr" class="email">p.karamolegos@yahoo.gr</a>
+            </div>
+            <div class="col-sm-4">
+            A project made by: Karamolegkos Panagiotis
+            </div>
+            <div class="col-sm-4">
+            Calendar Pro © 2021
+            </div>
+        </div>
+        <br>
+        </div>
+    </footer>
+
+
+    <!-- Test script for front end purposes -->
+    <script>
+        // A function to show dummy results, or not, randomly 
+        function showResults() {
+            // Get a random number from 1 to 10
+            let rand = Math.floor(Math.random() * 10) + 1
+
+            // Get the test IDs
+            let resultsFound = document.getElementById("resultsFound");
+            let resultsNotFound = document.getElementById("resultsNotFound");
+
+            if(rand <= 5){
+                resultsFound.style.display = "block";
+            }
+            else{
+                resultsNotFound.style.display = "block";
+            }
+        }
+        showResults();
+    </script>
+
+    <!-- A script to make a friendly message for the date that the user is viewing -->
+    <script>
+        const monthNames = [
+            "January",      // 0
+            "February",     // 1
+            "March",        // 2
+            "April",        // 3
+            "May",          // 4
+            "June",         // 5
+            "July",         // 6
+            "August",       // 7
+            "September",    // 8
+            "October",      // 9
+            "November",     // 10
+            "December",     // 11
+        ];
+
+        let dayLetters = [];
+        dayLetters.push("st");
+        dayLetters.push("nd");
+        dayLetters.push("rd");
+        for(let i=0; i<= 27; i++){
+            dayLetters.push("th");
+        }
+
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const thisYear = urlParams.get('year');
+        const thisMonth = urlParams.get('month');
+        const thisDay = urlParams.get('day');
+
+        document.getElementById("jumbotron-title").innerHTML = thisDay+dayLetters[thisDay-1]+" of "+monthNames[thisMonth]+", "+thisYear;
+
+    </script>
+
+    <!-- A script to give to the events the abillity to be viewed alone -->
+    <script>
+        // make all events have the right link
+        let events = document.querySelectorAll(".list-group-item");
+        events.forEach((item, index)=>{
+            // This id will be given by the database
+            item.href = "./view_event.html?event_id="+index;
+        })
+
+        // Make active the events that are hovered
+        $(document).ready(function () {
+            $(".list-group-item").hover(
+            function () {
+                $(this).addClass("active");
+            },
+            function () {
+                $(this).removeClass("active");
+            }
+            );
+        });
+    </script>
+</body>
+</html>
